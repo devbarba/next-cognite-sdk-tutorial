@@ -1,0 +1,1 @@
+export { CogMenuIcon as default } from './CogMenuIcon'

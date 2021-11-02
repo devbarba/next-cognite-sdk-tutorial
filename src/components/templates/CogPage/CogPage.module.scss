@@ -1,0 +1,12 @@
+.cogPageContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+  
+.cogPageContainer main {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1 1;
+}
+  

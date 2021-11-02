@@ -1,0 +1,1 @@
+export { CogTable as default } from "./CogTable";

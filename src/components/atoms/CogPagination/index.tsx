@@ -1,0 +1,1 @@
+export { CogPagination as default } from './CogPagination'

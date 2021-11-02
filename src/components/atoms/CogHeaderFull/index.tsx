@@ -1,0 +1,1 @@
+export { CogHeaderFull as default } from './CogHeaderFull'

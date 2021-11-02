@@ -1,0 +1,28 @@
+.cogHeaderFullContainer {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    background-color: var(--white);
+    box-shadow: 0 0 8px rgb(0 0 0 / 10%) !important;
+  }
+  
+  .cogHeaderFullContainer div {
+    flex: 1 1;
+  }
+  
+  .cogHeaderFullContainer div:first-child i {
+    text-transform: uppercase;
+    padding-right: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .cogHeaderFullContainer div:first-child span {
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  

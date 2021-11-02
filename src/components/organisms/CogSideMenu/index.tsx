@@ -1,0 +1,1 @@
+export { CogSideMenu as default } from './CogSideMenu'
