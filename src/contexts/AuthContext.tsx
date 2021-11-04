@@ -1,9 +1,16 @@
-import { CogniteClient } from "@cognite/sdk";
-import React, { useState } from "react";
+import {
+    CogniteAuthentication,
+    CogniteClient,
+    REDIRECT
+} from "@cognite/sdk";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 interface AuthContextData {
+    instance: CogniteAuthentication;
     client: CogniteClient;
-    handleAuthenticate: () => void;
+    loggedIn: boolean;
+    handleLoggedIn: (diff: boolean) => void;
     handleLogout: () => void;
 }
 
@@ -15,30 +22,49 @@ export const AuthContext = React.createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
 
-    const [client, setClient] = useState<CogniteClient>({} as CogniteClient);
+    const [loggedIn, setLoggedin] = useState(false);
+    const [project, setProject] = useState<string>(String(process.env.NEXT_PUBLIC_CDF_PROJECT));
+    const [baseUrl, setBaseUrl] = useState<string>(String(process.env.NEXT_PUBLIC_CDF_API));
+    const [client, setClient] = useState<CogniteClient>(new CogniteClient({
+        appId: 'lohika-cognite-onboarding',
+        project: project!,
+        getToken
+    }));
+    const [instance, setInstance] = useState<any>(new CogniteAuthentication({
+          project,
+    }));
 
-    async function handleAuthenticate() {
-        try {
-            const clientAuth = new CogniteClient({
-                appId: 'Lohika/Cognite Onboarding',
-                project: 'publicdata',
-                apiKeyMode: true,
-                getToken: () => Promise.resolve('OWIyZWEwNjctMDFmNy00MjI0LWE5NDctYmRjMTcwYTU0Y2Jj')
-            });
-    
-            clientAuth.authenticate();
-            setClient(clientAuth);
-        } catch(err) {
-            console.log(err);
-        }
+    async function getToken() {
+        if (!instance)  throw new Error("SDK instance missing");
+        
+        await instance.handleLoginRedirect();
+        let token = await instance.getCDFToken();
+
+        if (token) return token.accessToken;
+        
+        token = await instance.login({ onAuthenticate: REDIRECT });
+        
+        if (token) return token.accessToken;
+
+        throw new Error("error");
+    }
+
+    function handleLoggedIn(diff: boolean) {
+        setLoggedin(diff);
     }
 
     async function handleLogout() {}
 
+    useEffect(() => {
+        loggedIn && client.authenticate();
+    }, [loggedIn]);
+
     return(
         <AuthContext.Provider value={{
+            loggedIn,
+            instance,
             client,
-            handleAuthenticate,
+            handleLoggedIn,
             handleLogout
         }}>
             {children}

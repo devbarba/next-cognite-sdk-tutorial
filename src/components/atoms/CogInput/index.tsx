@@ -1,0 +1,1 @@
+export { CogInput as default } from './CogInput'

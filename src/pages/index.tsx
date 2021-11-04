@@ -1,67 +1,54 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Asset } from '@cognite/sdk/dist/src';
-// import styles from '../styles/Home.module.scss'
+import { Asset } from '@cognite/sdk';
 import { useAuth } from '../contexts/AuthContext';
 import CogPage from '../components/templates/CogPage';
 import CogRoundedContainer from '../components/atoms/CogRoundedContainer';
 import CogHeaderFull from '../components/atoms/CogHeaderFull';
 import CogTable from '../components/molecules/CogTable';
 import { useRoot } from '../contexts/RootContext';
+import { useRouter } from 'next/router';
+import CogFilter from '../components/molecules/CogFilter';
+import { useFilters } from '../contexts/FilterContext';
 
 const Home: NextPage = () => {
-    const { lastPage } = useRoot();
+    const { lastPage, currentPagination, handleLastPage, handleCurrentPagination } = useRoot();
+    const { client, loggedIn, handleLoggedIn, } = useAuth();
+    const { filters } = useFilters();
 
+    const router = useRouter();
+
+    const [actualPage, setActualPage] = useState<number>(1);
     const [search, setSearch] = useState<string>('');
     const [assets, setAssets] = useState<Asset[]>({} as Asset[]);
 
-    const {
-        handleAuthenticate,
-        client
-    } = useAuth();
 
     useEffect(() => {
-        handleAuthenticate();
-    }, []);
+        // async function getAssets() {
+        //     try {
+        //         const searchAssets = await client.assets?.list().autoPagingToArray({ limit: 10 });
 
-    useEffect(() => {
-        async function getAssets() {
-            try {
-                const assets = await client.assets?.list().autoPagingToArray({ limit: 10 });
-                // console.log(assets);
+        //         await (await client.assets?.list()).next
+        //         if (searchAssets !== undefined && typeof searchAssets === 'object') {
+        //             handleLoggedIn(true);
+        //             let newAssets: any = [];
+        //             searchAssets.map((a: Asset) => {
+        //                 newAssets.push({
+        //                     id: a.id,
+        //                     name: a.name,
+        //                     description: a.description
+        //                 });
+        //             })
+        //             setAssets(newAssets);
+        //         }
+        //     } catch(err) {
+        //         console.log(err);
+        //     }
+        // }
 
-                if (assets !== undefined && typeof assets === 'object') {
-                    let newAssets: any = [];
-
-                    assets.map(a => {
-                        newAssets.push({
-                            id: a.id,
-                            name: a.name,
-                            description: a.description
-                        });
-                    })
-                    setAssets(newAssets);
-                    console.log(assets[0]);
-                }
-            } catch(err) {
-                console.log(err);
-            }
-        }
-
-        if (client) getAssets();
+        // if (client) getAssets();
     }, [client]);
-
-    async function handleSearch() {
-        const newSearch = await client.assets.search({
-            search: {
-                query: search
-            }
-        });
-
-        setAssets(newSearch);
-    }
 
     function renderAssets() {
         return (
@@ -87,78 +74,103 @@ const Home: NextPage = () => {
         )
     }
 
+    async function searchAsset() {
+
+        const searchAssets = await client.assets.search({
+            search: {
+                query: filters.name
+            }
+        });
+        
+        if (searchAssets !== undefined && typeof searchAssets === 'object') {
+            let newAssets: any = [];
+            searchAssets.map((a: Asset) => {
+                newAssets.push({
+                    id: a.id,
+                    name: a.name,
+                    description: a.description
+                });
+            });
+            setAssets(newAssets);
+        }
+    }
+
+    useEffect(() => {
+        if (filters.name) searchAsset();
+    }, [filters]);
+
+    useEffect(() => {
+        // if (!router.query.id_token) handleLoggedIn(false);
+    }, [router, loggedIn]);
+
     return (
         <>
             <Head>
                 <title>Cognite Search</title>
             </Head>
 
-            <CogPage>
-                <CogHeaderFull label={'Assets'} icon={'fas fa-box'}>{}</CogHeaderFull>
+            {
+                !router.query.id_token
+                    ?
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100%',
+                            }}
+                        >
+                            <button
+                                onClick={() => handleLoggedIn(true)}
+                                style={{
+                                    backgroundColor: 'var(--dark-blue)',
+                                    color: 'var(--white)',
+                                    padding: '10px 20px'
+                                }}
+                            >Log in</button>
+                        </div>
+                    :
+                        <CogPage>
+                            <CogHeaderFull label={'Assets'} icon={'fas fa-box'}>{}</CogHeaderFull>
 
-                <CogRoundedContainer>
-                    <CogTable
-                        lastPage={lastPage}
-                        tableData={{
-                            headers: ['ID', 'Asset', 'Description'],
-                            data: assets,
-                        }}
-                        noneMessage={'No assets registered.'}
-                        contentType={[
-                            {
-                                columnIndex: 0,
-                                type: 'normal',
-                            },
-                            {
-                                columnIndex: 1,
-                                type: 'normal',
-                            },
-                            {
-                                columnIndex: 2,
-                                type: 'normal',
-                                // type: 'tippy',
-                                // content: 'date',
-                            }
-                        ]}
-                    />
-                </CogRoundedContainer>
-            </CogPage>
+                            <CogFilter />
+
+                            <CogRoundedContainer>
+                                <h2>
+                                    <div style={{ textAlign: 'left', marginBottom: 20 }}>
+                                        <p>{`${assets.length > 0 ? assets.length : 0} Assets`}</p>
+                                    </div>
+                                </h2>
+
+                                <CogTable
+                                    lastPage={lastPage}
+                                    tableData={{
+                                        headers: ['ID', 'Asset', 'Description'],
+                                        data: assets,
+                                    }}
+                                    noneMessage={'No assets registered.'}
+                                    contentType={[
+                                        {
+                                            columnIndex: 0,
+                                            type: 'normal',
+                                        },
+                                        {
+                                            columnIndex: 1,
+                                            type: 'normal',
+                                        },
+                                        {
+                                            columnIndex: 2,
+                                            type: 'normal',
+                                            // type: 'tippy',
+                                            // content: 'date',
+                                        }
+                                    ]}
+                                />
+                            </CogRoundedContainer>
+                        </CogPage>
+            }
+            
         </>
-        // <div
-        //     style={{
-        //         display: 'flex',
-        //         flexDirection: 'column',
-        //         justifyContent: 'center',
-        //         alignItems: 'center'
-        //     }}
-        // >
-        //     <div
-        //         style={{
-        //             width: '100%',
-        //             marginBottom: '2rem',
-        //             background: '#CCC',
-        //             display: 'flex',
-        //             justifyContent: 'center'
-        //         }}
-        //     >
-        //         <input
-        //             type="text"
-        //             value={search}
-        //             placeholder='Search by the asset name'
-        //             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        //                 setSearch(e.target.value);
-        //                 handleSearch();
-        //             }}
-        //             style={{
-        //                 width: '40%'
-        //             }}
-        //         />
-        //     </div>
-
-        //     <div>
-        //         {assets && assets.length > 0 && renderAssets()}
-        //     </div>
-        // </div>
     )
 }
 

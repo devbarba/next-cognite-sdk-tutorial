@@ -1,0 +1,55 @@
+.buttonContainer {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  .buttonContainer button,
+  .buttonContainer a {
+    cursor: pointer;
+    display: inline-flex;
+    height: 3rem;
+    padding: 0.875rem 1rem;
+    width: 100%;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    color: var(--background-container) !important;
+    background-color: var(--dark-blue);
+    border: 0 solid var(--border-gray);
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .buttonContainer button:hover{
+    background-color: var(--dark-gray);
+  }
+  
+  .buttonContainer a:hover{
+    background-color: var(--text-blue-light) !important;
+  }
+  
+  .buttonFit {
+    width: fit-content !important;
+    padding: 0 2.5rem;
+  }
+  
+  .buttonSpin {
+    animation: spin 3s infinite;
+    animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .buttonSpinTwo {
+    animation: spin 3s infinite;
+    animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

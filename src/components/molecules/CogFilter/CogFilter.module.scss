@@ -1,0 +1,45 @@
+.cogFilterContainerPrimary {
+    margin-bottom: 2rem;
+}
+
+.cogFilterContainerSecondary {
+    margin-bottom: 2rem;
+    box-shadow: 0 0 8px rgb(0 0 0 / 10%) !important;
+}
+
+.cogFilterHandleShow {
+    padding: 1.25rem;
+    background-color: var(--white);
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    font-weight: 500;
+}
+
+.cogFilterDisable {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    background-color: var(--white);
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.cogFilterDisableTrue {
+   height: 0;
+}
+
+.cogFilterButtons {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.cogFilterInputContainer {
+    display: flex;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+}
+
+.cogFilterInputContainerInside {
+    width: 33.333333%;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}

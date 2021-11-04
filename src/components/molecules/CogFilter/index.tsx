@@ -1,0 +1,1 @@
+export { CogFilter as default } from './CogFilter'

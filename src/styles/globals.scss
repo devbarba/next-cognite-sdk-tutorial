@@ -5,6 +5,10 @@
     border: 0 solid var(--border-gray);
 }
 
+html, body, #__next {
+    height: 100%;
+}
+
 @media (max-width: 1080px) {
     html {
       font-size: 93.75%;
@@ -74,6 +78,11 @@ hr {
     --text-green: #047857;
     --text-opacity: 1;
     --white: #fff;
+    --grey-three: #828282;
+    --green: #77DDA6;
+    --input-color: #fcfcfc;
+    --side-color: #f1f1f1;
+
 }
 
 .sub-menu {
