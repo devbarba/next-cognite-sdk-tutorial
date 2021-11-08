@@ -5,25 +5,34 @@
   
   .buttonContainer button,
   .buttonContainer a {
-    cursor: pointer;
-    display: inline-flex;
-    height: 3rem;
-    padding: 0.875rem 1rem;
+
+    // display: inline-flex;
+    // height: 3rem;
+    // padding: 0.875rem 1rem;
     width: 100%;
-    border-radius: 0.25rem;
     font-weight: 500;
-    justify-content: center;
-    align-items: center;
-    color: var(--background-container) !important;
-    background-color: var(--dark-blue);
-    border: 0 solid var(--border-gray);
-    box-sizing: border-box;
-    outline: none;
-    transition: all 0.2s;
+    // justify-content: center;
+    // align-items: center;
+   color: var(--background-container) !important;
+   background-color: var(--dark-blue);
+    // border: 0 solid var(--border-gray);
+    // box-sizing: border-box;
+    // outline: none;
+    // transition: all 0.2s;
+  //background-color: #007fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  color: #fff;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px; 
+  transition: all 200ms ease;
+  cursor: pointer;
+  box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 0 rgba(0, 127, 255, 0);
+  border: none;
   }
   
   .buttonContainer button:hover{
-    background-color: var(--dark-gray);
+    background-color: var(--mui-blue);
   }
   
   .buttonContainer a:hover{

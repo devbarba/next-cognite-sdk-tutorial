@@ -1,0 +1,1 @@
+export { CogDate as default } from './CogDate'

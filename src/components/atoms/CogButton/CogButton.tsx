@@ -10,6 +10,7 @@ type CogButtonProps = {
 	type?: string;
 	buttonColor?: string;
     isLoading?: boolean;
+    className?: string;
 };
 
 export function CogButton({

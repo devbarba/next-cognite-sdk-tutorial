@@ -3,5 +3,10 @@
         "label": "Dashboard",
         "link": "/",
         "icon": "fas fa-home"
+    },
+    {
+        "label": "Time",
+        "link": "/time",
+        "icon": "fas fa-clock"
     }
 ]

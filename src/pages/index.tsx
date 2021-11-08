@@ -128,6 +128,7 @@ const Home: NextPage = () => {
                                     padding: '10px 20px'
                                 }}
                             >Log in</button>
+                            
                         </div>
                     :
                         <CogPage>
