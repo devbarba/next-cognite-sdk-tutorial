@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 export interface IFilter {
     name: string;
     assetId: string;
+    eventName: string;
 }
 
 interface FilterContextData {

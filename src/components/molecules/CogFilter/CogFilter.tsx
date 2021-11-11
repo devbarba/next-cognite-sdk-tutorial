@@ -25,6 +25,7 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
 
 	const [showFilters, setShowFilters] = useState(true);
 	const [name, setName] = useState('');
+	const [eventName, setEventName] = useState('');
 	const [assetId, setAssetId] = useState('');
 
 	const fieldsFilter = [
@@ -37,6 +38,14 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
 			onChangeFunction: setName,
 		},
 		{
+			label: 'Event Description',
+			type: 'text',
+			mask: null,
+			value: eventName,
+			keyDown: null,
+			onChangeFunction: setEventName,
+		},
+		{
 			label: 'Asset ID',
 			type: 'text',
 			mask: null,
@@ -47,7 +56,8 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
 	];
 
 	const filterFieldsPages: typeFieldsFiltersPage = {
-		'/': ['Asset Name', 'Asset ID'],
+		'/': ['Asset Name'],
+		'/events': ['Event Description'],
 	};
 
 	const filterFieldsPagesAtual = filterFieldsPages[pathName];
@@ -69,11 +79,13 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
         handleCurrentPagination(1);
 		setName('');
         setAssetId('');
+        setEventName('');
 
 		
 		handleFilters({
 			name: '',
-            assetId: ''
+            assetId: '',
+            eventName: '',
 		});
 	};
 
@@ -83,7 +95,8 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
         handleCurrentPagination(1);
 		handleFilters({
 			name,
-            assetId
+            assetId,
+            eventName
 		});
 	};
 

@@ -35,16 +35,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }));
 
     async function getToken() {
+        const tokenCookie = Cookies.get('cdf_token');
+
+        if (tokenCookie) {
+            handleLoggedIn(true);
+            return tokenCookie;
+        }
+
         if (!instance)  throw new Error("SDK instance missing");
         
         await instance.handleLoginRedirect();
         let token = await instance.getCDFToken();
 
-        if (token) return token.accessToken;
+        if (token) {
+            Cookies.set('cdf_token', token.accessToken);
+            return token.accessToken;
+        }
         
         token = await instance.login({ onAuthenticate: REDIRECT });
         
-        if (token) return token.accessToken;
+        if (token) {
+            console.log(token.accessToken);
+            Cookies.set('cdf_token', token.accessToken);
+            return token.accessToken;
+        }
 
         throw new Error("error");
     }
@@ -56,6 +70,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async function handleLogout() {}
 
     useEffect(() => {
+        async function getToken () {
+            const tokenCookie = Cookies.get('cdf_token');
+
+            if (tokenCookie) {
+                handleLoggedIn(true);
+                return tokenCookie;
+            }
+        }
+
+        getToken();
         loggedIn && client.authenticate();
     }, [loggedIn]);
 
