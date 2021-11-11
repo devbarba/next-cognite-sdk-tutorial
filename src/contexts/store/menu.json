@@ -1,7 +1,12 @@
 [
     {
-        "label": "Dashboard",
+        "label": "Assets",
         "link": "/",
         "icon": "fas fa-home"
+    },
+    {
+        "label": "Events",
+        "link": "/events",
+        "icon": "fas fa-clock"
     }
 ]

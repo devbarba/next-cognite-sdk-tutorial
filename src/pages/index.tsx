@@ -11,6 +11,7 @@ import { useRoot } from '../contexts/RootContext';
 import { useRouter } from 'next/router';
 import CogFilter from '../components/molecules/CogFilter';
 import { useFilters } from '../contexts/FilterContext';
+import moment from 'moment';
 
 const Home: NextPage = () => {
     const { lastPage, currentPagination, handleLastPage, handleCurrentPagination } = useRoot();
@@ -85,10 +86,15 @@ const Home: NextPage = () => {
         if (searchAssets !== undefined && typeof searchAssets === 'object') {
             let newAssets: any = [];
             searchAssets.map((a: Asset) => {
+                console.log(a);
                 newAssets.push({
                     id: a.id,
                     name: a.name,
-                    description: a.description
+                    description: a.description,
+                    created_at: {
+                        date: moment(a.createdTime).format('DD/MM/YYYY'),
+                        hour: moment(a.createdTime).format('HH:mm:ss'),
+                    },
                 });
             });
             setAssets(newAssets);
@@ -145,7 +151,8 @@ const Home: NextPage = () => {
                                 <CogTable
                                     lastPage={lastPage}
                                     tableData={{
-                                        headers: ['ID', 'Asset', 'Description'],
+                                        headers: ['ID', 'Asset', 'Description', 'Created At'],
+                                        asterisc: [3],
                                         data: assets,
                                     }}
                                     noneMessage={'No assets registered.'}
@@ -161,8 +168,11 @@ const Home: NextPage = () => {
                                         {
                                             columnIndex: 2,
                                             type: 'normal',
-                                            // type: 'tippy',
-                                            // content: 'date',
+                                        },
+                                        {
+                                            columnIndex: 3,
+                                            type: 'tippy',
+                                            content: 'date',
                                         }
                                     ]}
                                 />
