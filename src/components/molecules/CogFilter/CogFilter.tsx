@@ -6,6 +6,7 @@ import { useRoot } from '../../../contexts/RootContext';
 import CogButton from '../../atoms/CogButton';
 import CogInput from '../../atoms/CogInput';
 import styles from './CogFilter.module.scss';
+import Button from '@mui/material/Button';
 
 type CogFilterProps = {
 	labelSearch?: string;

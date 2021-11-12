@@ -14,7 +14,7 @@ import { useFilters } from "../contexts/FilterContext";
 import moment from "moment";
 import Button from "@mui/material/Button";
 
-const Home: NextPage = () => {
+const Models: NextPage = () => {
   const {
     lastPage,
     currentPagination,
@@ -36,24 +36,19 @@ const Home: NextPage = () => {
  
   async function searchEvent() {
 
-    
-
-    const searchEvents = await client.events.list({ filter: { startTime: { min: new Date('1 jan 2018') }, endTime: { max: new Date('1 jan 2019') } } });
-
+    const searchEvents = await client.models3D.list({ published: true })
 
     if (searchEvents !== undefined && typeof searchEvents === "object") {
       let newEvents: any = [];
-      console.log(searchEvents)
-      searchEvents.items.slice(1,10).map((events, idx ) => {
+      console.log(searchEvents.items);
+      searchEvents.items.map((events, idx ) => {
         newEvents.push({
-          externalId: events.externalId,
-          createdTime : events.createdTime,
-          startTime: events.startTime,
-          endTime : events.endTime
+          createdTime: events.createdTime,
+          name : events.name
         });
       });
       setEvents(newEvents);
-      console.log(newEvents)
+      //console.log(newEvents.slice(0,10))
     }
   }
 
@@ -141,4 +136,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Models;
