@@ -23,70 +23,31 @@ const Home: NextPage = () => {
   } = useRoot();
   const { client, loggedIn, handleLoggedIn } = useAuth();
   const { filters } = useFilters();
-
   const router = useRouter();
-
   const [actualPage, setActualPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [assets, setAssets] = useState<Asset[]>({} as Asset[]);
-
+  
+  useEffect(() => {}, [client]);
   useEffect(() => {
-    // async function getAssets() {
-    //     try {
-    //         const searchAssets = await client.assets?.list().autoPagingToArray({ limit: 10 });
-    //         await (await client.assets?.list()).next
-    //         if (searchAssets !== undefined && typeof searchAssets === 'object') {
-    //             handleLoggedIn(true);
-    //             let newAssets: any = [];
-    //             searchAssets.map((a: Asset) => {
-    //                 newAssets.push({
-    //                     id: a.id,
-    //                     name: a.name,
-    //                     description: a.description
-    //                 });
-    //             })
-    //             setAssets(newAssets);
-    //         }
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
-    // }
-    // if (client) getAssets();
-  }, [client]);
+    if (filters.name) searchAsset();
+  }, [filters]);
 
-  function renderAssets() {
-    return (
-      <table id="assets">
-        <tr key={0}>
-          <th>ID</th>
-          <th>Asset</th>
-          <th>Description</th>
-        </tr>
-        {assets.map((asset, idx) => {
-          return (
-            <tr key={idx + 1}>
-              <td>{asset.id}</td>
-              <td>{asset.name}</td>
-              <td>{asset.description}</td>
-            </tr>
-          );
-        })}
-      </table>
-    );
-  }
+  // if (!router.query.id_token) handleLoggedIn(false);
+   useEffect(() => { }, [router, loggedIn]);
 
   async function searchAsset() {
     const searchAssets = await client.assets.search({
       search: {
         query: filters.name,
       },
+      limit: filters.limit,
     });
 
     if (searchAssets !== undefined && typeof searchAssets === "object") {
       let newAssets: any = [];
       searchAssets.map((a: Asset, idx) => {
         newAssets.push({
-
           id: a.id,
           name: a.name,
           description: a.description,
@@ -100,87 +61,52 @@ const Home: NextPage = () => {
     }
   }
 
-  useEffect(() => {
-    if (filters.name) searchAsset();
-  }, [filters]);
-
-  useEffect(() => {
-    // if (!router.query.id_token) handleLoggedIn(false);
-  }, [router, loggedIn]);
 
   return (
     <>
       <Head>
-        <title>Cognite Search</title>
+        <title>Cognite Search - Assets</title>
       </Head>
 
-      {!router.query.id_token ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100%",
-          }}
-        >
-          <Button
-            variant="contained"
-            onClick={() => handleLoggedIn(true)}
-            style={{
-              // backgroundColor: 'var(--dark-blue)',
-              // color: 'var(--white)',
-              padding: "10px 20px",
+      <CogPage>
+        <CogHeaderFull label={"Cognite Search - Assets"} icon={"fas fa-box"}>{}</CogHeaderFull>
+        <CogFilter />
+        <CogRoundedContainer>
+          <h2>
+            <div style={{ textAlign: "left", marginBottom: 20 }}>
+              <p>{`${assets.length > 0 ? assets.length : 0} Assets`}</p>
+            </div>
+          </h2>
+          <CogTable
+            lastPage={lastPage}
+            tableData={{
+              headers: ["ID", "Asset", "Description", "Created At"],
+              asterisc: [3],
+              data: assets,
             }}
-          >
-            Log in
-          </Button>
-        </div>
-      ) : (
-        <CogPage>
-          <CogHeaderFull label={"Assets"} icon={"fas fa-box"}>
-            {}
-          </CogHeaderFull>
-
-          <CogFilter />
-
-          <CogRoundedContainer>
-            <h2>
-              <div style={{ textAlign: "left", marginBottom: 20 }}>
-                <p>{`${assets.length > 0 ? assets.length : 0} Assets`}</p>
-              </div>
-            </h2>
-
-            <CogTable
-              lastPage={lastPage}
-              tableData={{
-                headers: ["ID", "Asset", "Description", "Created At"],
-                asterisc: [3],
-                data: assets,
-              }}
-              noneMessage={"No assets registered."}
-              contentType={[
-                {
-                  columnIndex: 0,
-                  type: "normal",
-                },
-                {
-                  columnIndex: 1,
-                  type: "normal",
-                },
-                {
-                  columnIndex: 2,
-                  type: "normal",
-                },
-                {
-                  columnIndex: 3,
-                  type: "tippy",
-                  content: "date",
-                },
-              ]}
-            />
-          </CogRoundedContainer>
-        </CogPage>
-      )}
+            noneMessage={"No assets registered."}
+            contentType={[
+              {
+                columnIndex: 0,
+                type: "normal",
+              },
+              {
+                columnIndex: 1,
+                type: "normal",
+              },
+              {
+                columnIndex: 2,
+                type: "normal",
+              },
+              {
+                columnIndex: 3,
+                type: "tippy",
+                content: "date",
+              },
+            ]}
+          />
+        </CogRoundedContainer>
+      </CogPage>
     </>
   );
 };
