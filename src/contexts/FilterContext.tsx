@@ -2,7 +2,10 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 
 export interface IFilter {
     name: string;
-    limit: number;
+    limit: boolean;
+    sdate : Date;
+    edate : Date;
+    publish : boolean;
 }
 
 interface FilterContextData {

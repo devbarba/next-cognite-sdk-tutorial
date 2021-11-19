@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import CogLogo from '../../atoms/CogLogo';
 import CogMenuIcon from "../../atoms/CogMenuIcon";
-
 import styles from './CogSideMenu.module.scss';
 import { useContext, useEffect, useState } from 'react';
 import { MenuContext } from '../../../contexts/MenuContext';

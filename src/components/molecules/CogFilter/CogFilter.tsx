@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useFilters } from "../../../contexts/FilterContext";
 import { useRoot } from "../../../contexts/RootContext";
-import CogButton from "../../atoms/CogButton";
-import CogInput from "../../atoms/CogInput";
 import styles from "./CogFilter.module.scss";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 
 type CogFilterProps = {
   labelSearch?: string;
@@ -17,15 +17,15 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
   };
 
   const defaultLabelSearch = "Advanced search filters";
-
   const pathName = useRouter().pathname;
-
   const { handleCurrentPagination } = useRoot();
   const { filters, handleFilters } = useFilters();
-
   const [showFilters, setShowFilters] = useState(true);
   const [name, setName] = useState("");
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState();
+  const [sdate, setSDate] = useState();
+  const [edate, setEDate] = useState();
+  const [publish, setPublish] = useState(Boolean);
 
   const fieldsFilter = [
     {
@@ -44,10 +44,35 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
       keyDown: null,
       onChangeFunction: setLimit,
     },
+    {
+      label: "Published",
+      type: "boolean",
+      mask: null,
+      value: publish,
+      keyDown: null,
+      onChangeFunction: setPublish,
+    },
+    {
+      label: "Start Date",
+      type: "date",
+      mask: null,
+      value: sdate,
+      keyDown: null,
+      onChangeFunction: setSDate,
+    },
+    {
+      label: "End Date",
+      type: "date",
+      mask: null,
+      value: edate,
+      keyDown: null,
+      onChangeFunction: setEDate,
+    },
   ];
 
   const filterFieldsPages: typeFieldsFiltersPage = {
-    "/": ["Asset Name", 'Limit'],
+    "/": ["Asset Name", "Limit"],
+    "/t-series": ["Published"],
   };
 
   const filterFieldsPagesAtual = filterFieldsPages[pathName];
@@ -68,11 +93,16 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
 
     handleCurrentPagination(1);
     setName("");
-    setLimit(10);
-
+    setLimit(25);
+    setSDate();
+    setEDate();
+    setPublish(false);
     handleFilters({
       name: "",
-      limit: 10,
+      limit: 25,
+      sdate: "",
+      edate: "",
+      publish: false,
     });
   };
 
@@ -83,6 +113,9 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
     handleFilters({
       name,
       limit,
+      sdate,
+      edate,
+      publish,
     });
   };
 
@@ -96,33 +129,15 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
         showFilters ? "showFilter" : `${styles.cogFilterContainerSecondary}`
       }`}
     >
-      <div
-        onClick={(e) => handleShowFilter()}
-        className={styles.cogFilterHandleShow}
-        aria-hidden="true"
-      >
-        <i
-          className={`fas fa-chevron-${showFilters ? "down" : "up"} mr-2`}
-          style={{
-            marginRight: "0.5rem",
-            cursor: "pointer",
-          }}
-        />
-        {labelSearch ?? defaultLabelSearch}
-      </div>
-      <div
-        className={`${styles.cogFilterDisable}${
-          showFilters ? "" : " disableFilters"
-        }`}
-      >
+      <Grid className={`${styles.cogFilterDisable}`}>
         <div className={styles.cogFilterInputContainer}>
           {fieldsFilterExibhition.map((field, idx) => {
             return (
               <div key={idx} className={styles.cogFilterInputContainerInside}>
-                <CogInput
-                  label={field.label}
+                <TextField
+
                   type={field.type}
-                  placeholder="Digite..."
+                  placeholder="Search for Assets"
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     field.onChangeFunction(e.currentTarget.value)
                   }
@@ -131,7 +146,7 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
                       handleFilter(e);
                     }
                   }}
-                  onKeyDown={field.keyDown}
+                  //onKeyDown={field.keyDown}
                   value={field.value}
                   // @ts-ignore
                   options={field.options}
@@ -139,34 +154,29 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
               </div>
             );
           })}
-        </div>
-        <div style={{ flexDirection: "row", textAlign: "right" }}>
-          <div style={{ display: "inline-block", marginRight: "0.5rem" }}>
-            <CogButton
-              text={"Clear Filters"}
-              // buttonColor={'#FFFFFF'}
-              textColor={"#000000"}
-              type={"fit"}
-              //@ts-ignore
-              onClick={(e: React.FormEvent<HTMLInputElement>) => handleClean(e)}
-              classesBlockOption={styles.cogFilterButtons}
-            />
-          </div>
 
-          <div style={{ display: "inline-block" }}>
-            <CogButton
-              text={"Filter"}
-              textColor={"#FFFFFF"}
-              type={"fit"}
-              //@ts-ignore
-              onClick={(e: React.FormEvent<HTMLInputElement>) =>
-                handleFilter(e)
-              }
-              classesBlockOption={"inline-block"}
-            />
-          </div>
+          <Button
+            text={"Clear Filters"}
+            placeholder={"Clear Filters"}
+            // buttonColor={'#FFFFFF'}
+            type={"fit"}
+            //@ts-ignore
+            onClick={(e: React.FormEvent<HTMLInputElement>) => handleClean(e)}
+            classesBlockOption={styles.cogFilterButtons}
+          >
+            Clear
+          </Button>
+          <Button
+            text={"Filter"}
+            type={"fit"}
+            //@ts-ignore
+            onClick={(e: React.FormEvent<HTMLInputElement>) => handleFilter(e)}
+            classesBlockOption={"inline-block"}
+          >
+            Search
+          </Button>
         </div>
-      </div>
+      </Grid>
     </div>
   );
 }

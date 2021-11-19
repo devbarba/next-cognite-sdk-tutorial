@@ -2,11 +2,11 @@
     {
         "label": "Assets",
         "link": "/",
-        "icon": "fas fa-home"
+        "icon": "fas fa-dollar-sign"
     },
     {
-        "label": "Events",
-        "link": "/events",
+        "label": "Time Series",
+        "link": "/t-series",
         "icon": "fas fa-clock"
     }
 ]

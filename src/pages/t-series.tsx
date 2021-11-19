@@ -23,32 +23,27 @@ const Home: NextPage = () => {
   } = useRoot();
   const { client, loggedIn, handleLoggedIn } = useAuth();
   const { filters } = useFilters();
-
   const router = useRouter();
-
   const [actualPage, setActualPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [assets, setAssets] = useState<Asset[]>({} as Asset[]);
+  const [models3D, setmodels3D] = useState()
 
   useEffect(() => { }, [client]);
 
   async function searchAsset() {
-    const searchAssets = await client.assets.search({
-      search: {
-        query: filters.name,
-      }, limit: filters.limit,
-    });
 
-    if (searchAssets !== undefined && typeof searchAssets === "object") {
+    const models3D = await client.models3D.list({ published: filters.publish });
+    console.log(models3D);
+    if (models3D !== undefined && typeof models3D === "object") {
       let newAssets: any = [];
-      searchAssets.map((a: Asset, idx) => {
+      models3D.items.map((time) => {
         newAssets.push({
-          id: a.id,
-          name: a.name,
-          description: a.description,
+          id : time.id,
+          name : time.name,
           created_at: {
-            date: moment(a.createdTime).format("DD/MM/YYYY"),
-            hour: moment(a.createdTime).format("HH:mm:ss"),
+            date: moment(time.createdTime).format("DD/MM/YYYY"),
+            hour: moment(time.createdTime).format("HH:mm:ss"),
           },
         });
       });
@@ -56,9 +51,8 @@ const Home: NextPage = () => {
       console.log(newAssets);
     }
   }
-
   useEffect(() => {
-    if (filters.name) searchAsset();
+    if (filters.publish) searchAsset();
   }, [filters]);
 
   useEffect(() => {
@@ -88,8 +82,7 @@ const Home: NextPage = () => {
           <CogTable
             lastPage={lastPage}
             tableData={{
-              headers: ["ID", "Asset", "Description", "Created At"],
-              asterisc: [3],
+              headers: ["ID", "Name", "Created Time"],
               data: assets,
             }}
             noneMessage={"No assets registered."}
@@ -104,10 +97,6 @@ const Home: NextPage = () => {
               },
               {
                 columnIndex: 2,
-                type: "normal",
-              },
-              {
-                columnIndex: 3,
                 type: "tippy",
                 content: "date",
               },
