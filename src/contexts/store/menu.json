@@ -8,5 +8,15 @@
         "label": "Time Series",
         "link": "/t-series",
         "icon": "fas fa-clock"
+    },
+    {
+        "label": "Document",
+        "link": "/docs",
+        "icon": "fas fa-file"
+    },
+    {
+        "label": "Playground",
+        "link": "/playground",
+        "icon": "fas fa-code"
     }
 ]

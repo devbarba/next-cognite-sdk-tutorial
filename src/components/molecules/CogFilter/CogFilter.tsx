@@ -22,7 +22,7 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
   const { filters, handleFilters } = useFilters();
   const [showFilters, setShowFilters] = useState(true);
   const [name, setName] = useState("");
-  const [limit, setLimit] = useState();
+  const [limit, setLimit] = useState(25);
   const [sdate, setSDate] = useState();
   const [edate, setEDate] = useState();
   const [publish, setPublish] = useState(Boolean);
@@ -72,7 +72,7 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
 
   const filterFieldsPages: typeFieldsFiltersPage = {
     "/": ["Asset Name", "Limit"],
-    "/t-series": ["Published"],
+    "/t-series": ["Published"], 
   };
 
   const filterFieldsPagesAtual = filterFieldsPages[pathName];
@@ -93,10 +93,11 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
 
     handleCurrentPagination(1);
     setName("");
-    setLimit(25);
-    setSDate();
-    setEDate();
+    setLimit(0);
+    setSDate("");
+    setEDate("");
     setPublish(false);
+    
     handleFilters({
       name: "",
       limit: 25,
