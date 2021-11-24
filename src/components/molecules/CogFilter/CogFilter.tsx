@@ -71,7 +71,7 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
   ];
 
   const filterFieldsPages: typeFieldsFiltersPage = {
-    "/": ["Asset Name", "Limit"],
+    "/assets": ["Asset Name", "Limit"],
     "/t-series": ["Published"], 
   };
 
@@ -156,7 +156,22 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
             );
           })}
 
+         
           <Button
+          style={{margin: "10px"}}
+          variant="contained" color="success"
+            text={"Filter"}
+            type={"fit"}
+            //@ts-ignore
+            onClick={(e: React.FormEvent<HTMLInputElement>) => handleFilter(e)}
+            classesBlockOption={"inline-block"}
+          >
+            Search
+          </Button>
+
+          <Button
+          variant="contained" color="error" 
+          style={{margin: "10px"}}
             text={"Clear Filters"}
             placeholder={"Clear Filters"}
             // buttonColor={'#FFFFFF'}
@@ -166,15 +181,6 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
             classesBlockOption={styles.cogFilterButtons}
           >
             Clear
-          </Button>
-          <Button
-            text={"Filter"}
-            type={"fit"}
-            //@ts-ignore
-            onClick={(e: React.FormEvent<HTMLInputElement>) => handleFilter(e)}
-            classesBlockOption={"inline-block"}
-          >
-            Search
           </Button>
         </div>
       </Grid>

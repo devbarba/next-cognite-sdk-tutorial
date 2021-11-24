@@ -1,7 +1,12 @@
 [
     {
-        "label": "Assets",
+        "label": "Home",
         "link": "/",
+        "icon": "fas fa-home"
+    },
+    {
+        "label": "Assets",
+        "link": "/assets",
         "icon": "fas fa-dollar-sign"
     },
     {

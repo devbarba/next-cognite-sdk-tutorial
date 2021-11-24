@@ -23,10 +23,10 @@ const Docs: NextPage = () => {
       </Head>
 
       <CogPage>
-        <CogHeaderFull label={"Explore CDF"} icon={"fas fa-box"}>
-          {}
-        </CogHeaderFull>
-      
+      <CogHeaderFull label="Docs" icon="">{}</CogHeaderFull>
+        <CogRoundedContainer>
+          
+        </CogRoundedContainer>  
       </CogPage>
     </>
   );
