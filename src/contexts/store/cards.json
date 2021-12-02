@@ -18,19 +18,7 @@
         "description" : "Our Renewed E-Learning Portal"
     },
     {
-        "label": "Java SDK",
-        "link": "/docs",
-        "icon": "fab fa-java",
-        "description" : "Explore the Repository"
-    },
-    {
         "label": "Explore Me",
-        "link": "/playground",
-        "icon": "fas fa-code",
-        "description" : "Explore the Repository"
-    },
-    {
-        "label": "Support",
         "link": "/playground",
         "icon": "fas fa-code",
         "description" : "Explore the Repository"

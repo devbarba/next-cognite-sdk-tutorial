@@ -24,6 +24,7 @@ html, body, #__next {
 body {
     background-color: var(--background);
     color: var(--text-black);
+	//color : var(--text-cognite)
 }
   
 body,
@@ -52,8 +53,10 @@ hr {
 }
 
 :root {
-    --background: #F9F7EF;
-    --background-container: #ffffff;
+
+	--background: rgb(10, 25, 41);
+    //--background: #F9F7EF;
+	--background-container: #ffffff;
     --bg-blue: #ebf8ff;
     --bg-light-blue: #6b778c;
     --border-blue: #4299e1;
@@ -76,6 +79,7 @@ hr {
     --text-red: #b91c1c;
     --text-yellow: #b45309;
     --text-green: #047857;
+	--text-cognite : #ff6918;
     --text-opacity: 1;
     --white: #fff;
     --grey-three: #828282;

@@ -14,7 +14,7 @@ import { useFilters } from "../contexts/FilterContext";
 import moment from "moment";
 import Button from "@mui/material/Button";
 
-const Home: NextPage = () => {
+const Time: NextPage = () => {
   const {
     lastPage,
     currentPagination,
@@ -108,4 +108,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Time;

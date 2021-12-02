@@ -1,0 +1,12 @@
+.homePageContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;  
+}
+  
+.homePageContainer main {
+    padding: 5rem;
+    overflow-y: auto;
+    flex: 1 1;
+}
+  

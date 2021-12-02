@@ -72,7 +72,7 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
 
   const filterFieldsPages: typeFieldsFiltersPage = {
     "/assets": ["Asset Name", "Limit"],
-    "/t-series": ["Published"], 
+    "/time": ["Published"], 
   };
 
   const filterFieldsPagesAtual = filterFieldsPages[pathName];

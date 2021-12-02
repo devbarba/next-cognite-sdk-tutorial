@@ -15,14 +15,11 @@ interface IMenu {
 export const CogSideMenu = () => {
     const router = useRouter();
     const pathName = router.pathname;
-
     const [menus, setMenus] = useState<IMenu[]>([] as IMenu[]);
-
 	const { currentMenu } = useContext(MenuContext);
     
     useEffect(() => {
         let newMenus: any = [];
-
         currentMenu.forEach(cM => {
             newMenus.push(cM);
         });
@@ -39,7 +36,7 @@ export const CogSideMenu = () => {
 			<nav className="menu">
 				{menus.map(icon => {
 					return (
-						<CogMenuIcon
+						<CogMenuIcon 
 							key={icon.link}
 							label={icon.label}
 							link={icon.link}
@@ -47,7 +44,9 @@ export const CogSideMenu = () => {
 							pathName={pathName}
 						/>
 					);
+
 				})}
+				
 			</nav>
 		</aside>
 	);

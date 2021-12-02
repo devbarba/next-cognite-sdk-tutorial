@@ -1,1 +1,1 @@
-export { CogPage as default } from './CogPage'
+export { CogPage as default  } from './CogPage'

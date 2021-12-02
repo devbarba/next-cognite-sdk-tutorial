@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import CogSideMenu from "../../organisms/CogSideMenu";
 import styles from './CogPage.module.scss';
+
 type CogPageProps = {
 	secondMenu?: any;
     children: ReactNode,

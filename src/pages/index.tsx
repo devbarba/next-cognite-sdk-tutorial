@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import CogPage from "../components/templates/CogPage";
+import HomePage from "../components/templates/HomePage";
 import {
   Button,
   CardActionArea,
@@ -17,9 +17,9 @@ const LandingPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Cognite Search</title>
+        <title>Cognite | Home</title>
       </Head>
-      <CogPage>
+      <HomePage>
         <Grid container spacing={4} style={{ padding: 50 }}>
           <Grid item xs={7}>
             <Grid container spacing={4}>
@@ -51,7 +51,7 @@ const LandingPage: NextPage = () => {
             ></iframe>
           </Grid>
         </Grid>
-      </CogPage>
+      </HomePage>
     </>
   );
 };
