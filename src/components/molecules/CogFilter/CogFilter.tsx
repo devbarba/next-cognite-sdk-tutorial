@@ -73,6 +73,9 @@ export function CogFilter({ labelSearch }: CogFilterProps) {
   const filterFieldsPages: typeFieldsFiltersPage = {
     "/assets": ["Asset Name", "Limit"],
     "/time": ["Published"], 
+    "/home" : [],
+    "/sequences": ["Asset Name", "Limit"],
+    "glossary": [],
   };
 
   const filterFieldsPagesAtual = filterFieldsPages[pathName];

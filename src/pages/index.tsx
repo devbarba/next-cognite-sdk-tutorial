@@ -7,6 +7,7 @@ import {
   CardActions,
   Grid,
   Card,
+  Link,
   CardContent,
   Typography,
 } from "@mui/material";
@@ -35,6 +36,9 @@ const LandingPage: NextPage = () => {
                           {card.description}
                         </Typography>
                       </CardContent>
+                      <Button size="small">
+                      <Link href={card.link}>Explore...</Link>
+                        </Button>
                     </CardActionArea>
                   </Card>
                 </Grid>

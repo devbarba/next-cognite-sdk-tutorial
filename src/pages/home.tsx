@@ -33,12 +33,8 @@ const Time: NextPage = () => {
 
   async function searchAsset() {
 
-    const models3D = await client.events.list({ filter: { startTime: { min: new Date('1 jan 2018') }, endTime: { max: new Date('1 jan 2019') } } });
-    
-    const sequences = await client.sequences.list({ filter: { name: 'sequence_name' } });
-
+    const models3D = await client.models3D.list({ published: filters.publish });
     console.log(models3D);
-    console.log(sequences);
     if (models3D !== undefined && typeof models3D === "object") {
       let newAssets: any = [];
       models3D.items.map((time) => {
@@ -52,7 +48,7 @@ const Time: NextPage = () => {
         });
       });
       setAssets(newAssets);
-      //console.log(newAssets);
+      console.log(newAssets);
     }
   }
   useEffect(() => {

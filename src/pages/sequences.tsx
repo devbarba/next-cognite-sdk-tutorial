@@ -33,15 +33,13 @@ const Time: NextPage = () => {
 
   async function searchAsset() {
 
-    const models3D = await client.events.list({ filter: { startTime: { min: new Date('1 jan 2018') }, endTime: { max: new Date('1 jan 2019') } } });
-    
-    const sequences = await client.sequences.list({ filter: { name: 'sequence_name' } });
-
-    console.log(models3D);
+    //const models3D = await client.events.list({ filter: { startTime: { min: new Date('1 jan 2018') }, endTime: { max: new Date('1 jan 2019') } } });
+    const sequences = await client.sequences.list({ filter: { name: 'sequence_name', assetIds } });
+  
     console.log(sequences);
-    if (models3D !== undefined && typeof models3D === "object") {
+    if (sequences !== undefined && typeof sequences === "object") {
       let newAssets: any = [];
-      models3D.items.map((time) => {
+      sequences.items.map((time) => {
         newAssets.push({
           id : time.id,
           name : time.name,

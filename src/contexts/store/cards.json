@@ -1,8 +1,8 @@
 [
     {
-        "label": "Git Hub",
-        "link": "/",
-        "icon": "fab fa-github",
+        "label": "Glossary",
+        "link": "/glossary",
+        "icon": "fab fa-note",
         "description" : "Explore the Repository"
     },
     {
@@ -19,7 +19,7 @@
     },
     {
         "label": "Explore Me",
-        "link": "/playground",
+        "link": "/explore",
         "icon": "fas fa-code",
         "description" : "Explore the Repository"
     }
